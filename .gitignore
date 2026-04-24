@@ -1,0 +1,14 @@
+# XAMPP / server
+/project-root/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# PHP
+*.log
+/backend/config/db.php
