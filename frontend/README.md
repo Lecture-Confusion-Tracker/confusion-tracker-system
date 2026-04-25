@@ -45,12 +45,16 @@ project-root/
 ├── privacy.php             # Privacy policy with sticky TOC & scroll-spy
 ├── terms.php               # Terms of service
 │
+├── student/
+│   ├── dashboard.php       # Student dashboard — confusion cards, filter, upvote
+│   └── add_confusion.php   # Submit new confusion — course, topic, tag, description
+│
 ├── assets/
 │   ├── css/
 │   │   └── style.css       # All styles — layout, components, animations, responsive
 │   └── js/
 │       └── main.js         # Form validation, hamburger menu, FAQ accordion,
-│                           # scroll animations, animated counters, password toggle
+│                           # scroll animations, counters, upvote, filter, char counter
 │
 └── includes/
     ├── header.php          # Sticky navbar with logo, nav links, mobile hamburger
@@ -108,6 +112,8 @@ Then visit `http://localhost:8000`
 | Support | `/support.php` | Help cards, FAQ accordion, contact form |
 | Privacy | `/privacy.php` | Full privacy policy with sticky TOC |
 | Terms | `/terms.php` | Full terms of service with sticky TOC |
+| Student Dashboard | `/student/dashboard.php` | Confusion cards, course filter, upvote, sort |
+| Add Confusion | `/student/add_confusion.php` | Submit confusion with course, topic, tag |
 
 ---
 
@@ -201,8 +207,9 @@ CREATE TABLE confusion_pings (
 - [x] Register page — full validation, password strength meter
 - [x] Shared header & footer components
 - [x] Support, Privacy, Terms pages
+- [x] **Phase 3** — Student dashboard: confusion cards, upvote, course filter, sort
+- [x] **Phase 3** — Add confusion form: course, topic, tag, char counter, validation
 - [ ] **Phase 2** — Backend: user auth, session management, database (PHP + MySQL)
-- [ ] **Phase 3** — Student dashboard: join session, submit confusion pings
 - [ ] **Phase 4** — Lecturer dashboard: live heatmap, session controls, reports
 - [ ] **Phase 5** — Admin panel, institutional analytics, export to PDF
 

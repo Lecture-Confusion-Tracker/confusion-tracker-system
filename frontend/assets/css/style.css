@@ -111,6 +111,58 @@ p { color: var(--text-muted); }
 }
 .navbar-links a:hover { color: var(--text) !important; background: var(--bg); }
 .navbar-links .btn { padding: 8px 20px; }
+/* Fix: gradient background causes text to inherit transparent fill */
+.navbar-links .btn-primary,
+.navbar-links .btn-primary:visited,
+.navbar-links .btn-primary:hover,
+.mobile-nav .btn-primary,
+.mobile-nav .btn-primary:hover {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+.btn-nav-logout {
+  padding: 7px 14px; border-radius: var(--radius-sm); font-size: 0.9375rem;
+  font-weight: 500; color: var(--text-muted) !important; transition: all var(--transition);
+  background: none; border: none; cursor: pointer; font-family: var(--font); text-decoration: none;
+  display: inline-flex; align-items: center;
+}
+.btn-nav-logout:hover { color: var(--error) !important; background: #fef2f2; border-radius: var(--radius-sm); }
+.nav-user {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 0.875rem; font-weight: 600; color: var(--text);
+  padding: 4px 10px; border-radius: var(--radius-sm);
+  background: var(--bg-soft); border: 1px solid var(--border-purple);
+}
+.nav-user-avatar {
+  width: 26px; height: 26px; border-radius: 50%;
+  background: var(--gradient); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.7rem; font-weight: 700; flex-shrink: 0;
+}
+/* Force white text on primary nav button */
+.navbar-links .btn-primary,
+.navbar-links .btn-primary:visited,
+.navbar-links .btn-primary:hover,
+a.nav-cta, a.nav-cta:visited, a.nav-cta:hover {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+.btn-nav-logout {
+  padding: 7px 14px; border-radius: var(--radius-sm); font-size: 0.9375rem;
+  font-weight: 500; color: var(--text-muted) !important; transition: all var(--transition);
+  background: none; border: none; cursor: pointer; font-family: var(--font);
+}
+.btn-nav-logout:hover { color: var(--error) !important; background: #fef2f2; }
+.nav-user {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 0.875rem; font-weight: 600; color: var(--text);
+}
+.nav-user-avatar {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: var(--gradient); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem; font-weight: 700; flex-shrink: 0;
+}
 .hamburger {
   display: none; flex-direction: column; gap: 5px; cursor: pointer;
   padding: 8px; border-radius: var(--radius-sm); background: none; border: none;
@@ -709,4 +761,269 @@ p { color: var(--text-muted); }
 @media (max-width: 640px) {
   .support-grid { grid-template-columns: 1fr; }
   .contact-form-wrap { padding: 24px; }
+}
+
+/* ===========================
+   Student Dashboard
+=========================== */
+.dash-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.dash-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 28px;
+  padding: 16px 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.dash-filter-btns {
+  display: flex;
+  gap: 8px;
+}
+
+.dash-filter-btns .filter-btn.active {
+  background: var(--bg-soft);
+  border-color: var(--primary);
+  color: var(--primary) !important;
+}
+
+/* Confusion grid */
+.confusion-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+/* Confusion card */
+.confusion-card {
+  background: var(--surface);
+  border: 1px solid var(--border-purple);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.confusion-card::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+  background: var(--gradient); transform: scaleX(0); transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.confusion-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--accent);
+}
+
+.confusion-card:hover::after { transform: scaleX(1); }
+
+.confusion-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.confusion-card h3 {
+  font-size: 1rem;
+  color: var(--text);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.confusion-card p {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+  margin: 0;
+  flex: 1;
+}
+
+.confusion-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+
+.confusion-meta {
+  font-size: 0.8125rem;
+  color: var(--text-light);
+}
+
+.confusion-course {
+  font-size: 0.75rem;
+  color: var(--text-light);
+  font-weight: 500;
+}
+
+/* Badge */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  background: var(--bg-soft);
+  color: var(--primary);
+  border: 1px solid var(--border-purple);
+  padding: 3px 10px;
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Upvote button */
+.upvote-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px !important;
+  font-size: 0.8125rem !important;
+  border-radius: var(--radius-sm) !important;
+  transition: all var(--transition);
+}
+
+.upvote-btn.voted {
+  background: var(--bg-soft);
+  border-color: var(--primary);
+  color: var(--primary) !important;
+}
+
+.upvote-btn.voted svg { stroke: var(--primary); }
+
+/* ===========================
+   Add Confusion Form
+=========================== */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-muted) !important;
+  margin-bottom: 32px;
+  transition: color var(--transition);
+}
+
+.back-link:hover { color: var(--primary) !important; }
+
+.add-confusion-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border-purple);
+  border-radius: var(--radius-xl);
+  padding: 48px;
+  max-width: 600px;
+  margin: 0 auto;
+  box-shadow: var(--shadow-md);
+}
+
+.add-confusion-header {
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.add-confusion-header p { font-size: 0.9375rem; }
+
+.add-confusion-form .form-hint {
+  font-size: 0.78rem;
+  color: var(--text-light);
+  margin-top: 5px;
+  display: block;
+}
+
+/* Tag radio options */
+.tag-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag-option {
+  cursor: pointer;
+}
+
+.tag-option input[type="radio"] {
+  display: none;
+}
+
+.tag-option span {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 100px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: var(--surface);
+  transition: all var(--transition);
+  cursor: pointer;
+}
+
+.tag-option input[type="radio"]:checked + span {
+  border-color: var(--primary);
+  background: var(--bg-soft);
+  color: var(--primary);
+}
+
+.tag-option span:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+/* Empty state */
+.confusion-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 64px 24px;
+  background: var(--surface);
+  border: 2px dashed var(--border-purple);
+  border-radius: var(--radius-xl);
+}
+.confusion-empty-icon { font-size: 3rem; margin-bottom: 16px; }
+.confusion-empty h3 { margin-bottom: 8px; color: var(--text); }
+.confusion-empty p { color: var(--text-muted); font-size: 0.9375rem; }
+
+/* Result count */
+.dash-count {
+  font-size: 0.8125rem; color: var(--text-light); font-weight: 500;
+}
+
+/* Required star */
+.required-star { color: var(--error); margin-left: 2px; }
+
+/* Success state */
+.confusion-submitted { text-align: center; padding: 48px 24px; }
+.confusion-submitted .success-icon { font-size: 3rem; margin-bottom: 16px; }
+.confusion-submitted h3 { margin-bottom: 8px; }
+.confusion-submitted p { color: var(--text-muted); font-size: 0.9375rem; }
+/* Responsive */
+@media (max-width: 1024px) {
+  .confusion-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .confusion-grid { grid-template-columns: 1fr; }
+  .dash-controls { flex-direction: column; align-items: flex-start; }
+  .add-confusion-wrap { padding: 28px 20px; }
+  .dash-page-header { flex-direction: column; align-items: flex-start; }
 }
