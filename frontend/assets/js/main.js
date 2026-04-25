@@ -60,6 +60,110 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
+  // ── Student Dashboard ───────────────────────────
+
+  // Upvote buttons
+  document.querySelectorAll('.upvote-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var countEl = btn.querySelector('.vote-count');
+      var count = parseInt(btn.dataset.count);
+      if (btn.classList.contains('voted')) {
+        count--;
+        btn.classList.remove('voted');
+      } else {
+        count++;
+        btn.classList.add('voted');
+      }
+      btn.dataset.count = count;
+      countEl.textContent = count;
+      // BACKEND DEV: send upvote to server here, e.g.:
+      // fetch('../student/upvote.php', { method:'POST', body: new URLSearchParams({id: btn.dataset.id}) });
+    });
+  });
+
+  // Filter buttons (Most Recent / Most Voted)
+  var filterBtns = document.querySelectorAll('.filter-btn');
+  filterBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      filterBtns.forEach(function (b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      sortCards(btn.dataset.filter);
+    });
+  });
+
+  function sortCards(type) {
+    var container = document.getElementById('confusion-list');
+    if (!container) return;
+    var cards = Array.from(container.querySelectorAll('.confusion-card'));
+    cards.sort(function (a, b) {
+      if (type === 'votes') return parseInt(b.dataset.votes) - parseInt(a.dataset.votes);
+      return parseInt(a.dataset.time) - parseInt(b.dataset.time);
+    });
+    cards.forEach(function (c) { container.appendChild(c); });
+    updateCount();
+  }
+
+  // Course filter
+  var courseFilter = document.getElementById('course-filter');
+  if (courseFilter) {
+    courseFilter.addEventListener('change', function () {
+      var val = courseFilter.value;
+      document.querySelectorAll('.confusion-card').forEach(function (card) {
+        card.style.display = (!val || card.dataset.course === val) ? '' : 'none';
+      });
+      updateCount();
+    });
+  }
+
+  function updateCount() {
+    var countEl = document.getElementById('result-count');
+    if (!countEl) return;
+    var visible = document.querySelectorAll('.confusion-card:not([style*="display: none"])').length;
+    countEl.textContent = visible + ' result' + (visible !== 1 ? 's' : '');
+  }
+  updateCount();
+
+  // ── Add Confusion form ───────────────────────────
+
+  // Character counter
+  var descField = document.getElementById('description');
+  var charCount = document.getElementById('char-count');
+  if (descField && charCount) {
+    function updateCharCount() {
+      var len = descField.value.length;
+      charCount.textContent = len + ' / 500';
+      charCount.style.color = len > 480 ? 'var(--error)' : 'var(--text-light)';
+    }
+    descField.addEventListener('input', updateCharCount);
+    updateCharCount();
+  }
+
+  // Add confusion form validation
+  var addForm = document.getElementById('add-confusion-form');
+  if (addForm) {
+    addForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var ok = true;
+      var course = document.getElementById('course');
+      var topic  = document.getElementById('topic');
+      var desc   = document.getElementById('description');
+
+      if (!course || !course.value) { showError(course, 'course-error', 'Please select a course'); ok = false; } else clearError(course, 'course-error');
+      if (!topic.value.trim())      { showError(topic,  'topic-error',  'Topic is required');       ok = false; } else clearError(topic,  'topic-error');
+      if (!desc.value.trim())       { showError(desc,   'desc-error',   'Please describe your confusion'); ok = false; } else clearError(desc, 'desc-error');
+      if (desc.value.length > 500)  { showError(desc,   'desc-error',   'Maximum 500 characters');  ok = false; }
+
+      if (ok) {
+        var btn = document.getElementById('submit-btn');
+        btn.classList.add('btn-loading');
+        btn.disabled = true;
+        // BACKEND DEV: remove this timeout — the form will submit naturally to PHP
+        // which inserts to DB and redirects to dashboard.php?submitted=1
+        setTimeout(function () { addForm.submit(); }, 600);
+      }
+    });
+  }
+
   // ── FAQ Accordion ───────────────────────────────
   document.querySelectorAll('.faq-question').forEach(function (btn) {
     btn.addEventListener('click', function () {
