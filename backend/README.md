@@ -27,12 +27,3 @@ backend/
 │   ├── login.php               # Handle login POST, session creation
 │   ├── register.php            # Handle register POST, password hashing
 │   └── logout.php              # Destroy session
-├── api/
-│   ├── session.php             # Create / end lecture sessions
-│   ├── ping.php                # Submit anonymous confusion ping
-│   └── report.php              # Fetch post-session heatmap data
-├── dashboard/
-│   ├── student.php             # Student dashboard
-│   └── lecturer.php            # Lecturer dashboard
-└── includes/
-    └── auth_check.php          # Session guard middleware
