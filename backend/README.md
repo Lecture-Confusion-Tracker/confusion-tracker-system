@@ -1,32 +1,38 @@
-# Backend � Phase 2
+<div align="center">
 
-This folder will contain the PHP + MySQL backend for Lecture Confusion Tracker.
+# Backend — Phase 2
 
-## Planned structure
+![PHP](https://img.shields.io/badge/PHP-8+-777BB4?style=for-the-badge&logo=php&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-8+-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
 
-\\\
+**PHP + MySQL Backend** for **Lecture Confusion Tracker**
+
+</div>
+
+---
+
+## 📁 About This Folder
+
+This folder contains the **PHP + MySQL backend** for the **Lecture Confusion Tracker** project.
+
+---
+
+## 🗂️ Planned Structure
+
+```bash
 backend/
-+-- config/
-�   +-- db.php              # PDO database connection
-+-- auth/
-�   +-- login.php           # Handle login POST, session creation
-�   +-- register.php        # Handle register POST, password hashing
-�   +-- logout.php          # Destroy session
-+-- api/
-�   +-- session.php         # Create / end lecture sessions
-�   +-- ping.php            # Submit anonymous confusion ping
-�   +-- report.php          # Fetch post-session heatmap data
-+-- dashboard/
-�   +-- student.php         # Student dashboard
-�   +-- lecturer.php        # Lecturer dashboard
-+-- includes/
-    +-- auth_check.php      # Session guard middleware
-\\\
-
-## Tech stack
-- PHP 8+
-- MySQL 8+ (PDO with prepared statements)
-- PHP sessions for authentication
-- bcrypt password hashing via password_hash()
-
-See the main README for the full database schema.
+├── config/
+│   └── db.php                  # PDO database connection
+├── auth/
+│   ├── login.php               # Handle login POST, session creation
+│   ├── register.php            # Handle register POST, password hashing
+│   └── logout.php              # Destroy session
+├── api/
+│   ├── session.php             # Create / end lecture sessions
+│   ├── ping.php                # Submit anonymous confusion ping
+│   └── report.php              # Fetch post-session heatmap data
+├── dashboard/
+│   ├── student.php             # Student dashboard
+│   └── lecturer.php            # Lecturer dashboard
+└── includes/
+    └── auth_check.php          # Session guard middleware
