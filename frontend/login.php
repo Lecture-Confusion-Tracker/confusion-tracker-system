@@ -82,7 +82,7 @@
         }
         ?>
 
-        <form id="login-form" method="POST" action="login.php" novalidate>
+        <form id="login-form" method="POST" action="../backend/auth/login.php" novalidate>
           <input type="hidden" name="role" id="role-field" value="student" />
 
           <div class="form-group">

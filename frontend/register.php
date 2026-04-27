@@ -75,7 +75,7 @@
         }
         ?>
 
-        <form id="register-form" method="POST" action="register.php" novalidate style="margin-top:24px;">
+        <form id="register-form" method="POST" action="../backend/auth/register.php" novalidate style="margin-top:24px;">
 
           <div class="form-group">
             <label class="form-label" for="reg-name">Full Name</label>
