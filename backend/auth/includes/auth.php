@@ -76,6 +76,9 @@ function loginUser($usernameOrEmail, $password) {
         $_SESSION['username']  = $user['username'];
         $_SESSION['email']     = $user['email'];
         $_SESSION['role']      = $user['role'];
+        // Aliases used by frontend header & auth_guard
+        $_SESSION['user_name'] = $user['username'];
+        $_SESSION['user_role'] = $user['role'];
 
         return true;
     }

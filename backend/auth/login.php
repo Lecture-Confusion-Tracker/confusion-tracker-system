@@ -2,39 +2,43 @@
 require_once __DIR__ . '/includes/auth.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $usernameOrEmail = cleanInput($_POST['username'] ?? '');
+    $usernameOrEmail = cleanInput($_POST['email'] ?? $_POST['username'] ?? '');
     $password        = $_POST['password'] ?? '';
 
     if (empty($usernameOrEmail) || empty($password)) {
-        $error = "Username/Email and password are required!";
-    } else {
-        $result = loginUser($usernameOrEmail, $password);
-        
-        if ($result === true) {
-            // Redirect based on role
-            if (isLecturer()) {
-                redirect('../../frontend/lecturer/dashboard.php');
-            } else {
-                redirect('../../frontend/student/dashboard.php');
-            }
+        $_SESSION['login_error'] = 'Email and password are required.';
+        header('Location: ' . getBase() . 'frontend/login.php');
+        exit;
+    }
+
+    $result = loginUser($usernameOrEmail, $password);
+
+    if ($result === true) {
+        $base = getBase();
+        if (isLecturer()) {
+            header('Location: ' . $base . 'frontend/lecturer/dashboard.php');
         } else {
-            $error = $result;
+            header('Location: ' . $base . 'frontend/student/dashboard.php');
         }
+        exit;
+    } else {
+        $_SESSION['login_error'] = $result;
+        header('Location: ' . getBase() . 'frontend/login.php');
+        exit;
     }
 }
-?>
 
-<!DOCTYPE html>
-<html>
-<head><title>Login</title></head>
-<body>
-    <h2>Login</h2>
-    <?php if (isset($error)) echo "<p style='color:red;'>$error</p>"; ?>
-    
-    <form method="POST">
-        <input type="text" name="username" placeholder="Username or Email" required><br>
-        <input type="password" name="password" placeholder="Password" required><br>
-        <button type="submit">Login</button>
-    </form>
-</body>
-</html>
+// Redirect bare GET to login page
+header('Location: ' . getBase() . 'frontend/login.php');
+exit;
+
+// ── Resolve base URL dynamically ─────────────────
+function getBase(): string {
+    $script = str_replace('\\', '/', $_SERVER['SCRIPT_NAME']);
+    // Find the project root (folder containing both frontend/ and backend/)
+    $pos = strpos($script, '/backend/');
+    if ($pos !== false) {
+        return substr($script, 0, $pos) . '/';
+    }
+    return '/';
+}

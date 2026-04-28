@@ -1,6 +1,10 @@
 <?php
 require_once __DIR__ . '/includes/auth.php';
-
 logoutUser();
-redirect('../../frontend/index.php');   // Change path according to your frontend location
-?>
+
+$script = str_replace('\\', '/', $_SERVER['SCRIPT_NAME']);
+$pos    = strpos($script, '/backend/');
+$base   = $pos !== false ? substr($script, 0, $pos) . '/' : '/';
+
+header('Location: ' . $base . 'frontend/index.php');
+exit;
