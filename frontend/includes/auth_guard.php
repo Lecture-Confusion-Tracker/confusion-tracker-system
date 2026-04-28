@@ -15,7 +15,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 function guardRole(string $requiredRole = ''): void {
     // BACKEND: swap $_SESSION['user_id'] with your real auth check
     $loggedIn = isset($_SESSION['user_id']);
-    $role     = $_SESSION['user_role'] ?? '';
+    $role     = $_SESSION['user_role'] ?? ($_SESSION['role'] ?? '');
 
     if (!$loggedIn) {
         header('Location: ../login.php?redirect=' . urlencode($_SERVER['REQUEST_URI']));
