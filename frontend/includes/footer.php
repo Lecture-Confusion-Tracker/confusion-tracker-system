@@ -6,12 +6,17 @@
     </div>
 
     <ul class="footer-links">
-      <li><a href="support.php">Support</a></li>
-      <li><a href="privacy.php">Privacy</a></li>
-      <li><a href="terms.php">Terms</a></li>
+      <?php
+      // Works from any depth: /, /student/, /lecturer/
+      $inSub = strpos($_SERVER['PHP_SELF'], '/student/') !== false
+            || strpos($_SERVER['PHP_SELF'], '/lecturer/') !== false;
+      $fp = $inSub ? '../' : '';
+      ?>
+      <li><a href="<?= $fp ?>support.php">Support</a></li>
+      <li><a href="<?= $fp ?>privacy.php">Privacy</a></li>
+      <li><a href="<?= $fp ?>terms.php">Terms</a></li>
     </ul>
   </div>
-
   <p class="footer-copy">
     &copy; 2026 Lecture Confusion Tracker. All rights reserved.
   </p>
