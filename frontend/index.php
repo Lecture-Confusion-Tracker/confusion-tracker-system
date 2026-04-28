@@ -15,6 +15,27 @@
 
 <main>
 
+<?php
+// If logged in, adjust CTA targets to dashboard.
+$isLoggedIn = isset($_SESSION['user_id']);
+$userRole   = $_SESSION['user_role'] ?? ($_SESSION['role'] ?? '');
+$dashHref   = ($userRole === 'lecturer') ? 'lecturer/dashboard.php' : 'student/dashboard.php';
+
+// Landing page real data (safe fallback if DB unavailable)
+$totalConfusions = 0;
+$totalStudents   = 0;
+$topTopic        = 'N/A';
+try {
+  require_once __DIR__ . '/../backend/auth/includes/db.php';
+  $totalConfusions = (int)$pdo->query("SELECT COUNT(*) FROM confusions")->fetchColumn();
+  $totalStudents   = (int)$pdo->query("SELECT COUNT(*) FROM users WHERE role='student'")->fetchColumn();
+  $row = $pdo->query("SELECT topic FROM confusions GROUP BY topic ORDER BY COUNT(*) DESC LIMIT 1")->fetch(PDO::FETCH_ASSOC);
+  if ($row && !empty($row['topic'])) $topTopic = $row['topic'];
+} catch (Throwable $e) {
+  // Keep fallbacks (0 / N/A) if DB isn't reachable
+}
+?>
+
   <!-- ══════════════════════════════
        HERO
   ══════════════════════════════ -->
@@ -42,12 +63,18 @@
           </p>
 
           <div class="hero-actions">
-            <a href="register.php" class="btn btn-primary btn-lg">
-              Get Started Free →
-            </a>
-            <a href="login.php" class="btn btn-outline btn-lg">
-              Sign In
-            </a>
+            <?php if ($isLoggedIn): ?>
+              <a href="<?= htmlspecialchars($dashHref) ?>" class="btn btn-primary btn-lg">
+                Go to Dashboard →
+              </a>
+            <?php else: ?>
+              <a href="register.php" class="btn btn-primary btn-lg">
+                Get Started Free →
+              </a>
+              <a href="login.php" class="btn btn-outline btn-lg">
+                Sign In
+              </a>
+            <?php endif; ?>
           </div>
 
           <div class="hero-trust">
@@ -91,15 +118,15 @@
 
               <div class="dash-stats">
                 <div class="dash-stat">
-                  <div class="dash-stat-num" id="counter-students">0</div>
+                  <div class="dash-stat-num" id="counter-students" data-target="<?= (int)$totalStudents ?>">0</div>
                   <div class="dash-stat-label">Students</div>
                 </div>
                 <div class="dash-stat">
-                  <div class="dash-stat-num" id="counter-pings">0</div>
+                  <div class="dash-stat-num" id="counter-pings" data-target="<?= (int)$totalConfusions ?>">0</div>
                   <div class="dash-stat-label">Confusion Pings</div>
                 </div>
                 <div class="dash-stat">
-                  <div class="dash-stat-num" id="counter-clarity">0%</div>
+                  <div class="dash-stat-num" id="counter-clarity" data-target="<?= $totalStudents > 0 ? (int)max(0, min(100, round(100 - (($totalConfusions / max(1,$totalStudents)) * 10)))) : 0 ?>">0%</div>
                   <div class="dash-stat-label">Clarity Score</div>
                 </div>
               </div>
@@ -137,20 +164,20 @@
     <div class="container">
       <div class="stats-grid">
         <div class="stat-item fade-up">
-          <div class="stat-num">500+</div>
-          <div class="stat-label">Faculty Members</div>
+          <div class="stat-num"><?= number_format($totalConfusions) ?></div>
+          <div class="stat-label">Confusions logged</div>
         </div>
         <div class="stat-item fade-up" style="transition-delay:0.1s">
-          <div class="stat-num">12k+</div>
-          <div class="stat-label">Students Enrolled</div>
+          <div class="stat-num"><?= number_format($totalStudents) ?></div>
+          <div class="stat-label">Students</div>
         </div>
         <div class="stat-item fade-up" style="transition-delay:0.2s">
-          <div class="stat-num">98k+</div>
-          <div class="stat-label">Confusion Pings Tracked</div>
+          <div class="stat-num" style="font-size:1.25rem;line-height:1.2;"><?= htmlspecialchars($topTopic) ?></div>
+          <div class="stat-label">Most confusing topic</div>
         </div>
         <div class="stat-item fade-up" style="transition-delay:0.3s">
-          <div class="stat-num">34%</div>
-          <div class="stat-label">Avg. Clarity Improvement</div>
+          <div class="stat-num"><?= $totalStudents > 0 ? (int)max(0, min(100, round(100 - (($totalConfusions / max(1,$totalStudents)) * 10)))) : 0 ?>%</div>
+          <div class="stat-label">Clarity score</div>
         </div>
       </div>
     </div>
@@ -238,8 +265,12 @@
         <h2>Ready to bridge the gap?</h2>
         <p>Join hundreds of educators already using Lecture Confusion Tracker to improve student outcomes.</p>
         <div class="cta-actions">
-          <a href="register.php" class="btn btn-white btn-lg">Create Free Account</a>
-          <a href="login.php" class="btn btn-white-outline btn-lg">Sign In</a>
+          <?php if ($isLoggedIn): ?>
+            <a href="<?= htmlspecialchars($dashHref) ?>" class="btn btn-white btn-lg">Go to Dashboard</a>
+          <?php else: ?>
+            <a href="register.php" class="btn btn-white btn-lg">Create Free Account</a>
+            <a href="login.php" class="btn btn-white-outline btn-lg">Sign In</a>
+          <?php endif; ?>
         </div>
       </div>
     </div>

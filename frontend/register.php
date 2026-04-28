@@ -147,7 +147,7 @@
 
           <div class="checkbox-row">
             <input type="checkbox" id="terms" name="terms" value="1" required />
-            <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+            <label for="terms">I agree to the <a href="terms.php" target="_blank">Terms of Service</a> and <a href="privacy.php" target="_blank">Privacy Policy</a></label>
           </div>
 
           <button type="submit" id="register-btn" class="btn btn-primary btn-full btn-lg">
