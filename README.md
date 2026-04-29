@@ -216,12 +216,6 @@ These endpoints are used by forms and AJAX (`fetch`) calls.
 
 ---
 
-## Screenshots
-
-Not included (deployment/demo link will be provided separately).
-
----
-
 ## Future Improvements
 
 - Implement a full **lecture session** model (persist sessions, join codes, per-session analytics)
@@ -241,8 +235,3 @@ Not included (deployment/demo link will be provided separately).
 
 ---
 
-## License
-
-No license file is currently specified in this repository.
-
-If this project will be shared publicly or reused, add a `LICENSE` file (commonly MIT) and update this section accordingly.
