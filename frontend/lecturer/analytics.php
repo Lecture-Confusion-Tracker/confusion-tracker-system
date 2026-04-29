@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Analytics â€¢ Lecture Confusion Tracker</title>
+  <title>Analytics - Lecture Confusion Tracker</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../assets/css/style.css" />
@@ -15,7 +15,7 @@ $page = 'analytics';
 require_once __DIR__ . '/layout.php';
 require_once __DIR__ . '/../../backend/auth/includes/db.php';
 
-// â”€â”€ Stats â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Stats
 $totalParticipants = (int)$pdo->query("SELECT COUNT(DISTINCT user_id) FROM confusions")->fetchColumn();
 $totalPings        = (int)$pdo->query("SELECT COUNT(*) FROM confusions")->fetchColumn();
 $totalVotes        = (int)$pdo->query("SELECT COUNT(*) FROM votes")->fetchColumn();
@@ -25,7 +25,7 @@ $peakRow = $pdo->query("
     SELECT topic, COUNT(*) AS cnt FROM confusions
     GROUP BY topic ORDER BY cnt DESC LIMIT 1
 ")->fetch(PDO::FETCH_ASSOC);
-$peakTopic = $peakRow ? htmlspecialchars($peakRow['topic']) : 'â€”';
+$peakTopic = $peakRow ? htmlspecialchars($peakRow['topic']) : '-';
 $peakCount = $peakRow ? (int)$peakRow['cnt'] : 0;
 
 // Engagement score: votes / pings ratio * 100 (capped at 100)
@@ -123,7 +123,7 @@ $maxConfusions = max(array_column($topicBreakdown, 'confusion_count') ?: [1]);
       <div class="stat-big" style="font-size:1.1rem;"><?= $peakTopic ?></div>
       <div class="stat-note"><?= $peakCount ?> ping<?= $peakCount !== 1 ? 's' : '' ?> recorded on this topic.</div>
       <div class="stat-mini">
-        <div><?= $peakCount > 5 ? 'âš ï¸ Review recommended' : 'âœ… Within normal range' ?></div>
+        <div><?= $peakCount > 5 ? 'Review recommended' : 'Within normal range' ?></div>
       </div>
     </div>
 

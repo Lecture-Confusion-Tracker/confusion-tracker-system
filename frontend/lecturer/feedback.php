@@ -76,13 +76,13 @@ $courses = $pdo->query("SELECT id, name FROM courses ORDER BY name")->fetchAll(P
         <td><strong><?= htmlspecialchars($row['topic']) ?></strong></td>
         <td class="muted"><?= htmlspecialchars($row['course_name']) ?></td>
         <td style="font-size:0.875rem;color:var(--text-muted);max-width:260px;">
-          <?= htmlspecialchars(mb_strimwidth($row['description'], 0, 80, 'â€¦')) ?>
+          <?= htmlspecialchars(mb_strimwidth($row['description'], 0, 80, '...')) ?>
         </td>
         <td>
           <?php if ($row['tag']): ?>
             <span class="badge"><?= htmlspecialchars($row['tag']) ?></span>
           <?php else: ?>
-            <span class="muted">â€”</span>
+            <span class="muted">-</span>
           <?php endif; ?>
         </td>
         <td>

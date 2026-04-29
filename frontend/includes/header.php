@@ -36,7 +36,7 @@ $back    = $baseUrl . 'backend/';
           </a>
         </li>
         <li>
-          <a href="<?= $base ?>profile.php" class="nav-user">
+          <a href="<?= $front ?>profile.php" class="nav-user">
             <span class="nav-user-avatar"><?= strtoupper(substr($userName, 0, 1)) ?></span>
             <?= htmlspecialchars($userName) ?>
           </a>
